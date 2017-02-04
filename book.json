@@ -1,0 +1,11 @@
+{
+  "gitbook": ">=3.2.2",
+  "plugins": [
+    "mathjax"
+  ],
+  "pluginsConfig": {
+    "mathjax": {
+      "forceSVG": true
+    }
+  }
+}
