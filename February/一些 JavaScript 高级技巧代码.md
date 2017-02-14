@@ -1,5 +1,13 @@
 # 技术学习 一些 JavaScript 高级技巧代码
 
+列表
+
+- 函数节流
+- 柯里化 currying
+- 反柯里化 uncurrying
+- 分时函数
+- AOP 面向切面编程
+
 ## 函数节流
 
 实现：
@@ -57,6 +65,7 @@ var currying = function(fn) {
 ```
 
 使用：
+
 ```javascript
 function add(num1, num2) {
   return num1 + num2;
@@ -106,7 +115,7 @@ console.log(arr); // [1, 2, 3, 4]
 
 实现：
 
-````javascript
+```javascript
 var chunk = function(array, fn, count) {
   var obj,
       timer;
@@ -144,4 +153,46 @@ var renderDom = chunk(array, function(n) {
 }, 8);
 
 renderDom();
-````
+```
+
+## AOP 面向切面编程
+
+实现：
+
+```javascript
+Function.prototype.before = function(beforefn) {
+  var me = this;
+  return function() {
+    beforefn.apply(this, arguments);
+    return me.apply(this, arguments);
+  }
+}
+
+Function.prototype.after = function(afterfn) {
+  var me = this;
+  return function() {
+    var result = me.apply(this, arguments);
+    afterfn.apply(this, arguments);
+    return result;
+  }
+}
+```
+
+使用：
+
+```javascript
+function g(type){
+  type = type || "";
+  return function(){
+    console.log(type + "invoke func");
+  }
+}
+
+var func = g();
+var funcAop = func.before(g("before")).after(g("after"))
+
+funcAop();
+// "before invoke func"
+// "invoke func"
+// "after invoke func"
+```
