@@ -8,6 +8,7 @@
 - 分时函数
 - AOP 面向切面编程
 - 单例模式
+- 虚拟代理实现图片预加载
 
 ## 函数节流
 
@@ -228,4 +229,33 @@ var iframe1 = createSingleIframe()
 var iframe2 = createSingleIframe()
 
 console.log(iframe1 === iframe2); // true
+```
+
+## 虚拟代理实现图片预加载
+
+```javascript
+var myImage = (function() {
+  var imgNode = document.createElement('img');
+  document.body.appendChild(imgNode);
+  return {
+    'setSrc': function(src) {
+        imgNode.src = src;
+    }
+  }
+})();
+
+var proxyImage = (function() {
+  var img = new Image();
+  img.onload = function() {
+    myImage.setSrc(this.src)
+  }
+  return {
+    'setSrc': function(src) {
+        myImage.setSrc("c:/loading.gif");
+        img.src = src;
+    }
+  }
+})();
+
+proxyImage.setSrc("http://blabla/foo.jpg");
 ```
