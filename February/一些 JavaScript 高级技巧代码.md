@@ -7,6 +7,7 @@
 - 反柯里化 uncurrying
 - 分时函数
 - AOP 面向切面编程
+- 单例模式
 
 ## 函数节流
 
@@ -195,4 +196,36 @@ funcAop();
 // "before invoke func"
 // "invoke func"
 // "after invoke func"
+```
+
+## 单例模式
+
+实现：
+
+```javascript
+var getSingle = function(fn) {
+  var instance;
+  return function() {
+    return instance || (instance = fn.apply(this, arguments));
+  }
+}
+```
+
+使用：
+
+```javascript
+// 创建一个唯一的 iframe
+var createIframe = function() {
+  var iframe = document.createElement('iframe');
+  document.body.appendChild(iframe);
+  // 返回实例以供缓存
+  return iframe;
+}
+
+var createSingleIframe = getSingle(createIframe);
+
+var iframe1 = createSingleIframe()
+var iframe2 = createSingleIframe()
+
+console.log(iframe1 === iframe2); // true
 ```
