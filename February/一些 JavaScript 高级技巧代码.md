@@ -9,6 +9,7 @@
 - AOP 面向切面编程
 - 单例模式
 - 虚拟代理实现图片预加载
+- 发布-订阅模式
 
 ## 函数节流
 
@@ -259,3 +260,73 @@ var proxyImage = (function() {
 
 proxyImage.setSrc("http://blabla/foo.jpg");
 ```
+
+## 发布-订阅模式
+
+使用一个全局的 `Event` 对象来实现，它作为一个类似**中介者**的角色将发布者和订阅者联系起来。
+
+实现：
+
+```javascript
+var Event = (function() {
+    var clientList = {};
+    return {
+        // 接受订阅
+        listen: function(event, fn) {
+            if (!clientList[event]) {
+                clientList[event] = [];
+            }
+            clientList[event].push(fn);
+        },
+        // 发布事件
+        trigger: function() {
+            var event = Array.prototype.shift.call(arguments),
+                fns = clientList[event];
+
+            if (!fns || fns.length === 0) {
+                return false;
+            }
+
+            for (var i = 0, fn; fn = fns[i++];) {
+                fn.apply(this, arguments);
+            }
+        },
+        // 取消订阅的事件
+        remove: function(event, fn) {
+            var fns = clientList[event];
+
+            if (!fns) {
+                return false;
+            }
+
+            if (!fn) {
+                // 没有传入 fn, 则取消所有订阅
+                delete clientList[event];
+            } else {
+                for (var len = fns.length - 1; len >= 0; len--) {
+                    var _fn = fns[len];
+                    if (_fn === fn) {
+                        fns.splice(len, 1);
+                    }
+                }
+            }
+        }
+    }
+})();
+```
+
+使用：
+
+```javascript
+Event.listen("ev", function(data) {
+    console.log("ev " + data);
+})
+Event.trigger("ev", 1); // ev 1
+Event.trigger("ev", 2); // ev 2
+Event.remove("ev");
+Event.trigger("ev", 3); // false
+```
+
+稍高级一点，让 `Event` 对象拥有先发布后订阅的能力。
+
+实现方式是建立一个存放离线事件的堆栈，当事件发布的时候如果此时还没有订阅者订阅，就暂时将发布事件的动作包裹在一个函数里，当有对象来订阅这个事件之后，再遍历堆栈并依次执行这些函数（重新发布事件）。
