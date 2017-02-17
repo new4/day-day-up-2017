@@ -1,4 +1,4 @@
-# 技术学习 一些 JavaScript 高级技巧代码
+# 一些 JavaScript 高级技巧代码
 
 列表
 
