@@ -161,14 +161,16 @@ renderDom();
 
 ## AOP 面向切面编程
 
+可以使用 AOP 装饰函数以实现装饰模式
+
 实现：
 
 ```javascript
 Function.prototype.before = function(beforefn) {
     var me = this;
     return function() {
-        beforefn.apply(this, arguments);
-        return me.apply(this, arguments);
+        beforefn.apply(this, arguments);  // (1)
+        return me.apply(this, arguments); // (2)
     }
 }
 
@@ -200,6 +202,26 @@ funcAop();
 // "invoke func"
 // "after invoke func"
 ```
+
+应用：
+
+1. 数据统计
+
+  ```javascript
+  func.after(function(){
+  console.log("统计数据")；
+  })
+  ```
+
+2. 动态改变函数的参数
+
+  上面的`before`代码的实现中的`(1)`和`(2)`部分的参数是一致的，因此就可以在`before`中对函数的参数进行修正。
+
+3. 表单提交前的校验
+
+注意点：
+
+某函数通过`before`和`after`装饰之后返回的是一个新的函数，因此原函数上绑定的属性就不复存在了
 
 ## 单例模式
 
@@ -379,7 +401,6 @@ macroCommand.execute();
 // execute command1
 // execute command2
 // execute command3
-
 ```
 
 组合使用方式，有多个层级的树形结构时：
@@ -408,7 +429,7 @@ macroCommand.execute();
 // execute command2-2
 // execute command3-1
 // execute command3-2
-// execute command3-3    
+// execute command3-3
 ```
 
 应用：扫描文件夹
