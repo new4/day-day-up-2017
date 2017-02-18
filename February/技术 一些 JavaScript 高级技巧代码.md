@@ -10,6 +10,7 @@
 - 单例模式
 - 虚拟代理实现图片预加载
 - 发布-订阅模式
+- 组合模式
 
 ## 函数节流
 
@@ -330,3 +331,84 @@ Event.trigger("ev", 3); // false
 稍高级一点，让 `Event` 对象拥有先发布后订阅的能力。
 
 实现方式是建立一个存放离线事件的堆栈，当事件发布的时候如果此时还没有订阅者订阅，就暂时将发布事件的动作包裹在一个函数里，当有对象来订阅这个事件之后，再遍历堆栈并依次执行这些函数（重新发布事件）。
+
+## 组合模式
+
+适用范围：
+
+1. 表示对象的部分-整体层次结构
+2. 可贺希望统一对待树中的所有对象
+
+一种简单的宏命令：
+
+```javascript
+var MacroCommand = function() {
+    return {
+        commandList: [],
+        add: function(command) {
+            this.commandList.push(command);
+        },
+        execute: function() {
+            for (var i = 0, len = this.commandList.length; i < len; i++) {
+                this.commandList[i].execute();
+            }
+        }
+    }
+}
+```
+
+一般使用方式，只有一个层级：
+
+```javascript
+function gCommand(id) {
+    return {
+        execute: function() {
+            console.log("execute command" + id);
+        }
+    }
+}
+
+var macroCommand = MacroCommand();
+var command1 = gCommand(1);
+var command2 = gCommand(2);
+var command3 = gCommand(3);
+macroCommand.add(command1);
+macroCommand.add(command2);
+macroCommand.add(command3);
+macroCommand.execute();
+// execute command1
+// execute command2
+// execute command3
+
+```
+
+组合使用方式，有多个层级的树形结构时：
+
+```javascript
+var macroCommand1 = MacroCommand();
+macroCommand1.add(gCommand("1-1"));
+
+var macroCommand2 = MacroCommand();
+macroCommand2.add(gCommand("2-1"));
+macroCommand2.add(gCommand("2-2"));
+
+var macroCommand3 = MacroCommand();
+macroCommand3.add(gCommand("3-1"));
+macroCommand3.add(gCommand("3-2"));
+macroCommand3.add(gCommand("3-3"));
+
+var macroCommand = MacroCommand();
+macroCommand.add(macroCommand1);
+macroCommand.add(macroCommand2);
+macroCommand.add(macroCommand3);
+
+macroCommand.execute();
+// execute command1-1
+// execute command2-1
+// execute command2-2
+// execute command3-1
+// execute command3-2
+// execute command3-3    
+```
+
+应用：扫描文件夹
