@@ -3,6 +3,7 @@
 列表
 
 - 函数节流
+- 判断属性属于对象还是属于原型
 - 柯里化 currying
 - 反柯里化 uncurrying
 - 分时函数
@@ -51,6 +52,16 @@ var throttle = function(fn, interval) {
 window.onresize = throttle(function() {
     console.log("onresize");
 }, 1000);
+```
+
+## 判断属性属于对象还是属于原型
+
+同时使用`hasOwnProperty()`方法和`in`操作符，就可以确定某一个属性是属于对象还是属于原型
+
+```javascript
+function hasPrototypeProperty(object, name) {
+    return !object.hasOwnProperty(name) && (name in object);
+}
 ```
 
 ## 柯里化 currying
