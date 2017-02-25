@@ -13,6 +13,7 @@
 - 发布-订阅模式
 - 组合模式
 - 原型式继承
+- 寄生组合式继承
 
 ## 函数节流
 
@@ -461,3 +462,41 @@ function object(o) {
 ```
 
 ES5 中通过`Object.create()`规范了原型式继承
+
+## 寄生组合式继承
+
+```javascript
+function inheritPrototype(subType, superType) {
+    var prototype = Object.create(superType.prototype); // 创建对象
+    prototype.constructor = subType; // 增强对象
+    subType.prototype = prototype; // 指定对象
+}
+```
+
+使用举例：
+
+```javascript
+function superType(name) {
+    this.name = name;
+    this.colors = ["red", "blue", "green"];
+}
+
+superType.prototype.sayName = function() {
+    console.log(this.name);
+}
+
+function subType(name, age) {
+    superType.call(this, name);
+    this.age = age;
+}
+
+inheritPrototype(subType, superType);
+
+subType.prototype.sayAge = function() {
+    console.log(this.age);
+}
+
+var sub = new subType("subname", 15);
+sub.sayName(); // subname
+sub.sayAge(); // 15
+```
