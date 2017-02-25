@@ -12,6 +12,7 @@
 - 虚拟代理实现图片预加载
 - 发布-订阅模式
 - 组合模式
+- 原型式继承
 
 ## 函数节流
 
@@ -444,3 +445,19 @@ macroCommand.execute();
 ```
 
 应用：扫描文件夹
+
+## 原型式继承
+
+借助原型可以基于已有对象创建新对象，同时还不必因此创建自定义的类型。
+
+实现如下：
+
+```javascript
+function object(o) {
+    function F() {}
+    F.prototype = o;
+    return new F();
+}
+```
+
+ES5 中通过`Object.create()`规范了原型式继承
