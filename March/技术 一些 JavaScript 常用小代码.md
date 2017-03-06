@@ -42,7 +42,10 @@ var MAX_SAFE_INTEGER = Math.pow(2, 53) - 1;
   * isLength('3') // => false
   */
 function isLength(value) {
-    return typeof value == 'number' && value > -1 && value % 1 == 0 && value <= MAX_SAFE_INTEGER
+    return typeof value == 'number'
+            && value > -1
+            && value % 1 == 0 // Number.MIN_VALUE
+            && value <= MAX_SAFE_INTEGER // Infinity
 }
 
 function isArrayLike(value) {
