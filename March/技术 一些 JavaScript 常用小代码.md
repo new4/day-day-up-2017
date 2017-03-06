@@ -20,3 +20,10 @@ function htmlEscape(text) {
     });
 }
 ```
+
+使用：
+
+```javascript
+console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
+// &lt;p class=&quot;greeting&quot;&gt;Hello world!&lt;/p&gt;
+```
