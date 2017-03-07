@@ -4,6 +4,7 @@
 - isArrayLike
 - 生成闭区间`[min, max]`之内的随机数
 - shuffle
+- 单词边界匹配，单词首字母大写
 
 ## html escape
 
@@ -81,4 +82,16 @@ function shuffle(arr) {
     }
     return shuffled;
 };
+```
+
+## 单词边界匹配，单词首字母大写
+
+```javascript
+var str = "  kim a then read bbk   js tian na nenen  a";
+str = str.replace(/\b\w+\b/g, function(word) {
+    console.log(arguments);
+    return word.slice(0, 1).toUpperCase() + word.slice(1);
+});
+console.log(str);
+// Kim A Then Read Bbk   Js Tian Na Nenen  A
 ```
