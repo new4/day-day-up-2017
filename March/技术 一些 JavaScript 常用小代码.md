@@ -5,6 +5,8 @@
 - 生成闭区间`[min, max]`之内的随机数
 - shuffle
 - 单词边界匹配，单词首字母大写
+- 动态脚本
+- 动态样式
 
 ## html escape
 
@@ -94,4 +96,93 @@ str = str.replace(/\b\w+\b/g, function(word) {
 });
 console.log(str);
 // Kim A Then Read Bbk   Js Tian Na Nenen  A
+```
+
+## 动态脚本
+
+使用`<script>`元素可以向页面中插入`JavaScript`代码，一种方式是通过其`src`特性包含外部文件，另一种方式就是用这个元素本身来包含代码。
+
+插入外部文件：
+
+```javascript
+function loadScript(url) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = url;
+    document.body.appendChild(script);
+}
+```
+
+使用：
+
+```javascript
+loadScript("client.js");
+```
+
+直接插入JavaScript 代码:
+
+```javascript
+function loadScriptString(code) {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    try {
+        script.appendChild(document.createTextNode(code));
+    } catch (ex) {
+        // for IE
+        script.text = code;
+    }
+    document.body.appendChild(script);
+}
+```
+
+使用：
+
+```javascript
+loadScriptString("function sayHi(){alert('hi');}");
+```
+
+## 动态样式
+
+两种方式：利用`<link>`元素来包含来自外部的文件以及利用`<style>`元素指定嵌入的样式。
+
+`<link>`方式：
+
+```javascript
+function loadStyles(url) {
+    var link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.type = "text/css";
+    link.href = url;
+    var head = document.getElementsByTagName("head")[0];
+    head.appendChild(link);
+
+}
+```
+
+使用
+
+```javascript
+loadStyles("styles.css");
+```
+
+`<style>`方式：
+
+```javascript
+function loadStyleString(css) {
+    var style = document.createElement("style");
+    style.type = "text/css";
+    try {
+        style.appendChild(document.createTextNode(css));
+    } catch (ex) {
+        style.styleSheet.cssText = css;
+    }
+    var head = document.getElementsByTagName("head")[0];
+    head.appendChild(style);
+}
+```
+
+使用：
+
+```javascript
+loadStyleString("body{background-color:red}");
 ```
