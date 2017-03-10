@@ -218,13 +218,11 @@ function encodeFormData(data) {
 function getData(url, data, callback) {
     var request = new XMLHttpRequest();
     request.open("GET", url + "?" + encodeFormData(data));
-
     request.onreadystatechange = function() {
         if (request.readyState === 4 && typeof callback === "function") {
             callback(request);
         }
     }
-    request.setReauestHeader("Content-Type", "x-www-form-urlencoded");
     request.send(null);
 }
 ```
