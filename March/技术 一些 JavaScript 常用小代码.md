@@ -8,6 +8,7 @@
 - 动态脚本
 - 动态样式
 - 编码表单对象用于`HTTP`请求
+- 使用`script`元素发送`JSONP`请求
 
 ## html escape
 
@@ -238,8 +239,45 @@ function postData(url, data, callback) {
             callback(request);
         }
     }
-    request.setReauestHeader("Content-Type", "x-www-form-urlencoded");
-    // reuqest.send(serialize(form))
+    request.setRequestHeader("Content-Type", "x-www-form-urlencoded");
     request.send(encodeFormData(data));
+    // 使用 JSON 编码主体来发送 POST 请求
+    // request.setRequestHeader("Content-Type", "application/json");
+    // request.send(JSON.stringify(data));
 }
+```
+
+## 使用`script`元素发送`JSONP`请求
+
+```javascript
+function getJSONP(url, callback) {
+    // 为本次请求创建一个唯一的回调函数名称
+    var cbnum = "cb" + getJSONP.counter++;
+    var cbname = "getJSONP." + cbnum;
+
+    // 将回调函数名称以表单编码的形式添加到URL的查询部分中
+    // 此处为'jsonp'，也有可能是'callback'
+    if (url.indexOf('?') === -1) {
+        url += "?jsonp=" + cbname;
+    } else {
+        url += "&jsonp=" + cbname;
+    }
+
+    // 创建 script 元素用于发送请求
+    var script = document.createElement("script");
+
+    // 定义将被脚本执行的回调函数
+    getJSONP[cbnum] = function(response) {
+        try() {
+            callback(response);
+        } finally {
+            delete getJSONP[cbnum];
+            script.parentNode.removeChild(script);
+        }
+    }
+
+    script.src = url;
+    document.body.appendChild(script);
+}
+getJSONP.counter = 0;
 ```
