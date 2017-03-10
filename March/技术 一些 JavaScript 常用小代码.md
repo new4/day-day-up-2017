@@ -7,6 +7,7 @@
 - 单词边界匹配，单词首字母大写
 - 动态脚本
 - 动态样式
+- 编码表单对象用于`HTTP`请求
 
 ## html escape
 
@@ -185,4 +186,44 @@ function loadStyleString(css) {
 
 ```javascript
 loadStyleString("body{background-color:red}");
+```
+
+## 编码表单对象用于`HTTP`请求
+
+```javascript
+// 若data是来自表单的名值对，使用 application/x-www-form-urlencoded 格式
+function encodeFormData(data) {
+    if (!data) {
+        return "";
+    }
+
+    var pairs = [];
+    for (var name in data) {
+        if (!data.hasOwnProperty(name) || typeof data[name] === "function") {
+            continue;
+        }
+
+        var value = data[name].toString();
+        name = encodeURIComponent(name.replace("20%", "+"));
+        value = encodeURIComponent(value.replace("20%", "+"));
+        pairs.push(name + "=" + value);
+    }
+    return pairs.join("&");
+}
+```
+
+发起一个 HTTP POST 请求
+
+```javascript
+function postData(url, data, callback) {
+    var request = new XMLHttpRequest();
+    request.open("POST", url);
+    request.onreadystatechange = function() {
+        if (request.readyState === 4 && typeof callback === "function") {
+            callback(request);
+        }
+    }
+    request.setReauestHeader("Content-Type", "x-www-form-urlencoded");
+    request.send(encodeFormData(data));
+}
 ```
