@@ -212,6 +212,23 @@ function encodeFormData(data) {
 }
 ```
 
+发起一个 HTTP GET 请求
+
+```javascript
+function getData(url, data, callback) {
+    var request = new XMLHttpRequest();
+    request.open("GET", url + "?" + encodeFormData(data));
+
+    request.onreadystatechange = function() {
+        if (request.readyState === 4 && typeof callback === "function") {
+            callback(request);
+        }
+    }
+    request.setReauestHeader("Content-Type", "x-www-form-urlencoded");
+    request.send(null);
+}
+```
+
 发起一个 HTTP POST 请求
 
 ```javascript
@@ -224,6 +241,7 @@ function postData(url, data, callback) {
         }
     }
     request.setReauestHeader("Content-Type", "x-www-form-urlencoded");
+    // reuqest.send(serialize(form))
     request.send(encodeFormData(data));
 }
 ```
