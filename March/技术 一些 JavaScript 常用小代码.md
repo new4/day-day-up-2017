@@ -9,6 +9,7 @@
 - 动态样式
 - 编码表单对象用于`HTTP`请求
 - 使用`script`元素发送`JSONP`请求
+- 跨浏览器的事件处理程序
 
 ## html escape
 
@@ -280,4 +281,29 @@ function getJSONP(url, callback) {
     document.body.appendChild(script);
 }
 getJSONP.counter = 0;
+```
+
+## 跨浏览器的事件处理程序
+
+```javascript
+var EventUtil = {
+    addHandler: function(element, type, handler) {
+        if (element.addEventListener) {
+            element.addEventListener(type, handler, false);
+        } else if (element.attachEvent) {
+            element.attachEvent("on" + type, handler);
+        } else {
+            element["on" + type] = handler;
+        }
+    },
+    removeHandler: function(element, type, handler) {
+        if (element.removeEventListener) {
+            element.removeEventListener(type, handler, false);
+        } else if (element.detachEvent) {
+            element.detachEvent("on" + type, handler);
+        } else {
+            element["on" + type] = null;
+        }
+    }
+};
 ```
