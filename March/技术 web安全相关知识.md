@@ -1,6 +1,7 @@
 # 技术 web安全相关知识
 
 - 浏览器的同源策略
+- CSRF 跨站域请求伪造
 
 ## 浏览器的同源策略
 
@@ -65,3 +66,11 @@ Javascript 的 APIs 中，如 `iframe.contentWindow`, `window.parent`, `window.o
 `window.name` 属性可以用来临时存储数据，可以跨域访问。
 
 `Cookies` 使用不同的源定义方式。一个页面可以为本域和任何父域设置 `cookie`，只要是父域不是公共后缀即可。
+
+## CSRF 跨站域请求伪造
+
+防御`CSFR`的几种策略：
+
+- 验证 `HTTP Referer` 字段
+- 在请求地址中添加 `token` 并进行验证
+- 在 `HTTP` 头中自定义属性并进行验证
