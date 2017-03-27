@@ -1,4 +1,7 @@
 {
+  "title": "2017 Day Day Up",
+  "description": "用于记录 2017 年中遇到的各种零碎知识",
+  "author": "new4",
   "gitbook": ">=3.2.2",
   "plugins": [
     "katex",
@@ -12,7 +15,7 @@
   ],
   "pluginsConfig": {
     "simple-page-toc": {
-      "maxDepth": 2,
+      "maxDepth": 3,
       "skipFirstH1": true
     },
     "prism": {
@@ -23,5 +26,8 @@
     "github": {
       "url": "https://github.com/new4"
     }
+  },
+  "styles": {
+    "website": "styles/website.css"
   }
 }
