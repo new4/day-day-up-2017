@@ -1,6 +1,27 @@
 {
   "gitbook": ">=3.2.2",
   "plugins": [
-    "katex"
-  ]
+    "katex",
+    "simple-page-toc",
+    "-highlight",
+    "prism",
+    "prism-themes",
+    "github",
+    "splitter",
+    "expandable-chapters-small"
+  ],
+  "pluginsConfig": {
+    "simple-page-toc": {
+      "maxDepth": 2,
+      "skipFirstH1": true
+    },
+    "prism": {
+      "css": [
+        "prism-themes/themes/prism-xonokai.css"
+      ]
+    },
+    "github": {
+      "url": "https://github.com/new4"
+    }
+  }
 }

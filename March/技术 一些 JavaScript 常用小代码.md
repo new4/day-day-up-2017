@@ -1,15 +1,19 @@
 # 技术学习 一些 JavaScript 常用小代码
 
-- html escape
-- isArrayLike
-- 生成闭区间`[min, max]`之内的随机数
-- shuffle
-- 单词边界匹配，单词首字母大写
-- 动态脚本
-- 动态样式
-- 编码表单对象用于`HTTP`请求
-- 使用`script`元素发送`JSONP`请求
-- 跨浏览器的事件处理程序
+<!-- toc -->
+
+<!--
+  - html escape
+  - isArrayLike
+  - 生成闭区间`[min, max]`之内的随机数
+  - shuffle
+  - 单词边界匹配/首字母大写
+  - 动态脚本
+  - 动态样式
+  - 编码表单对象用于`HTTP`请求
+  - 使用`script`元素发送`JSONP`请求
+  - 跨浏览器的事件处理程序
+-->
 
 ## html escape
 
@@ -89,7 +93,7 @@ function shuffle(arr) {
 };
 ```
 
-## 单词边界匹配，单词首字母大写
+## 单词边界匹配/首字母大写
 
 ```javascript
 var str = "  kim a then read bbk   js tian na nenen  a";
