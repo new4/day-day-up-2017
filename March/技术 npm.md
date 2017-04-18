@@ -89,3 +89,15 @@ npm uninstall --save-dev <package_name>
 ```bash
 npm uninstall -g <package_name>
 ```
+
+## 列出所有安装的包
+
+```bash
+npm list
+```
+
+## 根据 package.json 移除项目不依赖的包
+
+```bash
+npm prune
+```
