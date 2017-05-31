@@ -4,6 +4,7 @@
 
 <!--
   - html escape
+  - 判断是否是空对象 isEmptyObject
   - isArrayLike
   - 生成闭区间`[min, max]`之内的随机数
   - shuffle
@@ -39,6 +40,17 @@ function htmlEscape(text) {
 ```javascript
 console.log(htmlEscape("<p class=\"greeting\">Hello world!</p>"));
 // &lt;p class=&quot;greeting&quot;&gt;Hello world!&lt;/p&gt;
+```
+
+## 判断是否是空对象
+
+```javascript
+function isEmptyObject( obj ) {
+    for ( var name in obj ) {
+        return false;
+    }
+    return true;
+}
 ```
 
 ## isArrayLike
