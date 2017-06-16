@@ -14,6 +14,7 @@
   - 编码表单对象用于`HTTP`请求
   - 使用`script`元素发送`JSONP`请求
   - 跨浏览器的事件处理程序
+  - 获取两个数组之间差异
 -->
 
 ## html escape
@@ -322,4 +323,43 @@ var EventUtil = {
         }
     }
 };
+```
+
+## 获取两个数组之间差异
+
+获取新数组 `newArr` 相对于旧数组 `oldArr` 新增和移除的值
+
+```javascript
+function compare(value1, value2) {
+    return value1 - value2;
+}
+
+function getChange(newArr, oldArr) {
+    var add = [],
+        del = [];
+
+    newArr.sort(compare);
+    oldArr.sort(compare);
+
+    while (newArr.length !== 0 && oldArr.length !== 0) {
+        if (newArr[0] < oldArr[0]) {
+            add.push(newArr.shift());
+        } else if (newArr[0] > oldArr[0]) {
+            del.push(oldArr.shift());
+        } else {
+            newArr.shift();
+            oldArr.shift();
+        }
+    }
+
+    if (newArr.length === 0) {
+        del = del.concat(oldArr);
+    }
+
+    if (oldArr.length === 0) {
+        add = add.concat(newArr);
+    }
+
+    return {add: add, del: del}
+}
 ```
