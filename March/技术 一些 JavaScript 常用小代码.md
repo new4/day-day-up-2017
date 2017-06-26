@@ -15,6 +15,9 @@
   - 使用`script`元素发送`JSONP`请求
   - 跨浏览器的事件处理程序
   - 获取两个数组之间差异
+  - 清除浮动
+  - isObject
+  - 深复制
 -->
 
 ## html escape
@@ -362,4 +365,103 @@ function getChange(newArr, oldArr) {
 
     return {add: add, del: del}
 }
+```
+
+## 清除浮动
+
+```css
+.container::before,
+.container::after {
+    content:"";
+    display:table;
+}
+.container::after {
+    clear:both;
+}
+.container {
+    zoom:1; /* For IE 6/7 (trigger hasLayout) */
+}
+```
+
+## isObject
+
+```javascript
+// 验证对象是否是一个复合数据类型的对象(即非基本数据类型String, Boolean, Number, null, undefined)
+// 如果基本数据类型通过new进行创建, 则也属于对象类型
+_.isObject = function(obj) {
+    return obj === Object(obj);
+};
+```
+
+## 深复制
+
+```javascript
+var isArray = Array.isArray || function(arr) {
+    return (arr != null) && (Object.prototype.toString.call(obj) == '[object Array]');
+}
+
+var isObject = function(obj) {
+    return (obj != null) && (typeof obj == 'object');
+}
+
+var getListOp = (function() {
+    var list = [];
+    return {
+        add: function(item) {
+            return list.push(item);
+        },
+        find: function(item) {
+            for (var i = 0, len = list.length; i < len; i++) {
+                if (item === list[i]) {
+                    return true;
+                }
+            }
+            return false;
+        }
+    }
+})();
+
+function deepCopy(obj, listOp) {
+    var result = false;
+    listOp = listOp || getListOp;
+    if (isArray(obj)) {
+        result = [];
+        for (var i = 0, len = obj.length; i < len; i++) {
+            var item = obj[i];
+            if (listOp.find(item)) {
+                result[i] = item;
+            } else {
+                listOp.add(item);
+                result[i] = deepCopy(item, listOp);
+            }
+        }
+    } else if (isObject(obj)) {
+        result = {};
+        for (var key in obj) {
+            var item = obj[key];
+            if (listOp.find(item)) {
+                result[key] = item;
+            } else {
+                listOp.add(item);
+                result[key] = deepCopy(item, listOp);
+            }
+        }
+    } else {
+        result = obj;
+    }
+    return result;
+}
+
+var a = {
+        "a": "a",
+        c: ["a", "b"]
+    },
+    b = {
+        "b": "b"
+    };
+
+a.b = b;
+b.a = a;
+a.c.push(b);
+c = deepCopy(a);
 ```
