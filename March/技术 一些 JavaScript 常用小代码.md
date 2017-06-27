@@ -18,6 +18,7 @@
   - 清除浮动
   - isObject
   - 深复制
+  - div 实现 textbox
 -->
 
 ## html escape
@@ -464,4 +465,40 @@ a.b = b;
 b.a = a;
 a.c.push(b);
 c = deepCopy(a);
+```
+
+## div 实现 textbox
+HTML代码：
+```html
+<div class="test_box" contenteditable="true"><br /></div>
+```
+
+CSS代码：
+```css
+.test_box {
+    width: 400px; 
+    min-height: 120px; 
+    max-height: 300px;
+    _height: 120px; 
+    margin-left: auto; 
+    margin-right: auto; 
+    padding: 3px; 
+    outline: 0; 
+    border: 1px solid #a0b3d6; 
+    font-size: 12px; 
+    word-wrap: break-word;
+    overflow-x: hidden;
+    overflow-y: auto;
+    -webkit-user-modify: read-write-plaintext-only;
+}
+```
+
+JS代码：
+```javascript
+if (typeof document.webkitHidden == "undefined") {
+    // 非chrome浏览器阻止粘贴
+    box.onpaste = function() {
+        return false;
+    }
+}
 ```
