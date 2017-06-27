@@ -15,6 +15,7 @@
   - 组合模式
   - 原型式继承
   - 寄生组合式继承
+  - debounce
 -->
 
 ## 函数节流
@@ -501,4 +502,24 @@ subType.prototype.sayAge = function() {
 var sub = new subType("subname", 15);
 sub.sayName(); // subname
 sub.sayAge(); // 15
+```
+
+## debounce
+
+```js
+_.debounce = function(func, wait, immediate) {
+    var timeout;
+    return function() {
+        var context = this, args = arguments;
+        var later = function() {
+            timeout = null;
+            if(!immediate)
+                func.apply(context, args);
+        };
+        if(immediate && !timeout)
+            func.apply(context, args);
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
 ```
