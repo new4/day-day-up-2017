@@ -479,7 +479,7 @@ CSS代码：
     width: 400px; 
     min-height: 120px; 
     max-height: 300px;
-    _height: 120px; 
+    _height: 120px; ` n
     margin-left: auto; 
     margin-right: auto; 
     padding: 3px; 
