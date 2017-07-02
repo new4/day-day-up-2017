@@ -298,11 +298,11 @@ CSP 管理网站允许加载的内容, 并且使用白名单的机制对网站�
 CSP 并不是用来防止 xss 攻击的, 而是最小化 xss 发生后所造成的伤害. 
 
 - 通过response头: 只允许脚本从本源加载
-    Content-Security-Policy: script-src ‘self’
+    Content-Security-Policy: script-src 'self'
 
 - 通过HTML的META标签: 
     ```html
-    <meta http-equiv=”Content-Security-Policy” content=”script-src ‘self’”>
+    <meta http-equiv="Content-Security-Policy" content="script-src 'self'">
     ```
 
 ### X-Frame-Options
