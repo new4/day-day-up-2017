@@ -15,7 +15,7 @@
   - 重定向 301 和 302
   - 重排(reflow)与重绘(repaint)
   - XSS
-  - prototype 与 __proto__
+  - prototype 与 `__proto__`
 -->
 
 ## 渐进增强与优雅降级
@@ -297,8 +297,13 @@ CSP 管理网站允许加载的内容, 并且使用白名单的机制对网站�
 
 CSP 并不是用来防止 xss 攻击的, 而是最小化 xss 发生后所造成的伤害. 
 
-- 通过response头: 只允许脚本从本源加载 Content-Security-Policy: script-src ‘self’
-- 通过HTML的META标签: <meta http-equiv=”Content-Security-Policy” content=”script-src ‘self’”>
+- 通过response头: 只允许脚本从本源加载
+    Content-Security-Policy: script-src ‘self’
+
+- 通过HTML的META标签: 
+    ```html
+    <meta http-equiv=”Content-Security-Policy” content=”script-src ‘self’”>
+    ```
 
 ### X-Frame-Options
 
@@ -316,7 +321,9 @@ X-Frame-Options 响应头是用来给浏览器指示允许一个页面可否在 
 
 HTML5为iframe提供了安全属性 sandbox, 进而限制iframe的能力. 如下:
 
+```html
 <iframe src="untrusted.html" sandbox="allow-scripts allow-forms"></iframe>
+```
 
 ### 其他安全相关的HTTP头
 
@@ -325,15 +332,14 @@ HTML5为iframe提供了安全属性 sandbox, 进而限制iframe的能力. 如下
 - HSTS (HTTP Strict-Transport-Security)
 
 
-## prototype 与 __proto__
+## prototype 与 `__proto__`
 
 - prototype 是函数(function) 的一个属性, 它指向函数的原型.
-- __proto__ 是对象的内部属性, 它指向构造器的原型, 对象依赖它进行原型链查询.
+- `__proto__` 是对象的内部属性, 它指向构造器的原型, 对象依赖它进行原型链查询.
 
-因此, prototype 只有函数才有, 其他(非函数)对象不具有该属性. 而 __proto__ 是对象的内部属性, 任何对象都拥有该属性.
+因此, prototype 只有函数才有, 其他(非函数)对象不具有该属性. 而 `__proto__` 是对象的内部属性, 任何对象都拥有该属性.
 
 <!-- todo -->
 <!--promise-->
 <!--canvas-->
 <!--http && https-->
-<!--安全-->
