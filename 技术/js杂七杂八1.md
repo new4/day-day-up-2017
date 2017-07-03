@@ -476,16 +476,16 @@ HTML代码：
 CSS代码：
 ```css
 .test_box {
-    width: 400px; 
-    min-height: 120px; 
+    width: 400px;
+    min-height: 120px;
     max-height: 300px;
     _height: 120px; ` n
-    margin-left: auto; 
-    margin-right: auto; 
-    padding: 3px; 
-    outline: 0; 
-    border: 1px solid #a0b3d6; 
-    font-size: 12px; 
+    margin-left: auto;
+    margin-right: auto;
+    padding: 3px;
+    outline: 0;
+    border: 1px solid #a0b3d6;
+    font-size: 12px;
     word-wrap: break-word;
     overflow-x: hidden;
     overflow-y: auto;
