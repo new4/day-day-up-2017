@@ -72,7 +72,7 @@ function inner(){
 outer(); // 显示 outer 的源码
 ```
 
-## cookie 和session
+## cookie 和 session
 cookie 和session 的区别：
 
 - cookie 数据存放在客户的浏览器上, session 数据放在服务器上
@@ -265,7 +265,7 @@ if (!Function.prototype.bind) {
 
 ## XSS
 
-XSS (Cross-Site Script) 攻击又叫跨站脚本攻击, 本质是一种注入攻击. 其原理, 简单的说就是利用各种手段把恶意代码添加到网页中, 并让受害者执行这段脚本. XSS能做用户使用浏览器能做的一切事情. 同源策略也无法保证不受XSS攻击，因为此时攻击者就在同源之内.
+XSS (Cross-Site Script) 攻击又叫跨站脚本攻击, 本质是一种**注入攻击**. 其原理, 简单的说就是利用各种手段把恶意代码添加到网页中, 并让受害者执行这段脚本. XSS能做用户使用浏览器能做的一切事情. 同源策略也无法保证不受XSS攻击，因为此时攻击者就在同源之内.
 
 防止xss攻击:
 
